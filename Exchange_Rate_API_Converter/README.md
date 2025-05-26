@@ -15,7 +15,6 @@ A beginner-friendly Streamlit project that lets users select a currency and inst
 - 🔄 Real-time exchange rate fetch from API
 - 🌐 Dropdown to select foreign currency
 - 🇮🇳 Converts to INR instantly
-- 🔐 API key hidden using `.env` file
 - ✅ Clean and beginner-friendly UI
 - 📦 Proper project directory with `requirements.txt` and `.gitignore`
 
