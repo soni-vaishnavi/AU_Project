@@ -2,7 +2,7 @@ import requests
 
 Base_url = "https://api.exchangerate-api.com/v4/latest/"
 
-
+# creating function to calculate the INR rate of the currencies
 def exchange_rate(currency_code):
 
     comp_url = Base_url + currency_code
