@@ -13,7 +13,7 @@ currency_options = ["USD", "AED", "CAD", "EUR", "GBP", "AUD", "SGD", "JPY", "IMP
 selected_curr = st.selectbox("Choose a currency:",currency_options)
 
 if st.button("Convert to INR:"):
-    INR_VAL= exchange_rate(selected_curr)
+    INR_VAL= exchange_rate(selected_curr) #calling the function here
     if INR_VAL:
      st.success(f"1{selected_curr} = Rs. {INR_VAL}")
     else:

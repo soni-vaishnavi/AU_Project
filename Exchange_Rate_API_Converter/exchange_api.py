@@ -17,5 +17,5 @@ def exchange_rate(currency_code):
     except: 
         return None
     
-ans= exchange_rate('USD')
-print(ans)
+# ans= exchange_rate('USD')
+# print(ans)
