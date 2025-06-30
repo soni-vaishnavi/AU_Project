@@ -2,7 +2,7 @@
 #IMPORTS
 import streamlit as st
 import datetime as dt
-from fav_subj import favorite_sub
+from fav_subj import favorite_sub #from -> file name   import-> function/class name
 
 
 st.title("Hello tell us about yourself")

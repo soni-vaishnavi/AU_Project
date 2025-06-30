@@ -1,7 +1,7 @@
 import streamlit as st
 from exchange_api import exchange_rate
 
-# creating the streamlit code to design a GUI Interface for the basic web app
+
 
 st.set_page_config(page_title="Currency Converter", page_icon= "💸")
 

@@ -1,57 +1,117 @@
+# streamlit_app.py
+
 import streamlit as st
 import datetime
-from PIL import Image
+import pandas as pd
+import numpy as np
 
-# TEXT
-st.title("hello this is my web page")
-st.write("this is my first streamlit app")
-st.header("it is section heading")
-st.subheader("this is the sub heading")
-st.write("Auto display:", [1, 2, 3])
 
-st.markdown("_**INPUT SECTION**_")
+# PAGE CONFIG
+st.set_page_config(page_title = "Intro to streamlit", page_icon = "🤩")
 
-st.text_input("Enter your name ")
-st.number_input("enter the number",min_value = 0, max_value = 25)
+
+#  TEXT SECTION
+st.text("good morning")
+st.title("Hello, This is My Web Page")
+st.write("This is my first Streamlit app.")
+st.header("Section Heading")
+st.subheader("Sub-heading Example")
+st.write("Auto Display of List:", [1, 2, 3])
+
+st.markdown("## INPUT SECTION")
+
+
+# INPUT FIELDS 
+st.text_input("Enter your name:")
+st.number_input("Enter a number", min_value=0, max_value=5)
 st.text_area("Feedback")
 
+st.date_input(
+    "Select Date", 
+    min_value=datetime.date(2000, 1, 1), 
+    max_value=datetime.date(2027, 12, 31)
+)
 
-#st.date_input("Select date")
-st.date_input("select date ",min_value= datetime.date(2000,1,1), max_value = datetime.date(2027,12,31) )
+st.time_input("Select Time")
 
-st.time_input("select time")
 
-#BOXES
-st.checkbox("I agree")
-st.radio("Select your gender", ["Male", "Female"])
-st.selectbox("Country", ["India", "USA"])
-hobby = st.multiselect("select your hobby (only 2 please)", ["badminton", "tennis", "cricket"])     
-if len(hobby)> 2:
-    st.error("choose only 2 please")
-elif len(hobby)== 0:
-    st.error("please select atleast one value")
+
+#  CHOICE WIDGETS
+st.checkbox("I agree to the terms")
+
+st.radio("Select your gender:", ["Male", "Female"])
+st.selectbox("Select your country:", ["India", "USA"])
+
+# Hobby selection with validation
+hobby = st.multiselect(
+    "Select your hobbies (Only 2 allowed):", 
+    ["Badminton", "Tennis", "Cricket"]
+)
+done_button= st.button("Done")
+if done_button:
+    if len(hobby) > 2:
+     st.error("❌ Please select only 2 hobbies.")
+    elif len(hobby) == 0:
+     st.error("❗ Please select at least one hobby.")
+    else:
+        st.success("✅ Good choice!")
+
+
+# Sliders
+st.slider("How many stars would you give us?", 0, 5)
+st.select_slider("Select Difficulty Level:", options=["Easy", "Medium", "Hard"])
+
+
+# File upload
+file1 = st.file_uploader("Upload a CSV file", type=["csv"])
+if file1 is None:
+    st.warning("⚠️ Please upload a CSV file to continue.")
+    st.stop()
 else:
-    st.success("good choice")
-st.slider("how many stars will you give us", 0,5)
-st.select_slider("Difficulty", options = ["easy", "medium", "hard"])
-st.file_uploader("upload a csv file please")
+    df = pd.read_csv(file1)
+    st.success("✅ File uploaded successfully!")
+    st.dataframe(df)
+    
+# BUTTONS 
+st.subheader("Button Section")
+st.button("Submit the Form")
 
 
-st.subheader("buttons")
+# SIDEBAR MENU 
+st.sidebar.title("🍴 Menu")
+st.sidebar.radio(
+    "Select your favourite food:",
+    ["Rajma Chawal", "Chhole Bhature", "Kadi Chawal"]
+)
 
-st.button("submit the form")
+# file reading (Basic)
+button = st.button("Show data")
+if button:
+    try:
+        df = pd.read_csv("students.xls")
+        st.dataframe(df)
+        shape = df.shape
+        st.write("the shape of the data is\n" ,shape)
 
 
-st.sidebar.title("Menu")
-st.sidebar.radio("select your fav. food:", ["rajma chawal", "chhole bhature", "kadi-chawal"])
+    except  FileNotFoundError:
+        st.error("Sorry no file found")
 
-st.subheader("IMAGE SECTION")
 
-upload_image = st.file_uploader("upload an image", type = ["jpg", "jpeg", "png"])
+# CHARTS
 
-if upload_image is not None:
-    image = Image.open(upload_image)
 
-    st.image(image, caption = "nice image")
-    st.success("uploaded successfully")
- 
+# using sample sales data
+df = pd.read_csv("sample_sales_data.csv")
+
+
+  #line chart
+
+st.subheader("Sales & Profit with Time")
+st.line_chart(df.set_index('Date')[["Sales", "Profit"]])
+ # bar chart
+st.subheader("this is the bar chart")
+st.bar_chart(df.set_index('Date')[["Sales", "Profit"]])
+st.text("the charts are based on this data")
+st.dataframe(df)
+st.write(df.head())
